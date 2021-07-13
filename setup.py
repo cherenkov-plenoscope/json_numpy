@@ -9,7 +9,7 @@ setuptools.setup(
     version="0.0.0",
     author="Sebastian Achim Mueller",
     author_email="sebastian-achim.mueller@mpi-hd.mpg.de",
-    description="Dump and Load numpy arrays into json",
+    description="Dump/load numpy arrays into/from json",
     long_description=long_description,
     long_description_content_type="text/md",
     url="https://github.com/cherenkov-plenoscope/json_numpy",
