@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setuptools.setup(
     name="json_numpy_relleums",
-    version="0.0.0",
+    version="0.0.1",
     author="Sebastian Achim Mueller",
     author_email="sebastian-achim.mueller@mpi-hd.mpg.de",
     description="Dump/load numpy arrays into/from json",
