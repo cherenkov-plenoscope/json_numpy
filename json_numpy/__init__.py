@@ -3,6 +3,7 @@ import json
 import os
 import glob
 
+VALID_DTYPES = ['f8', 'i8']
 
 class Encoder(json.JSONEncoder):
     """
@@ -25,7 +26,7 @@ class Encoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
-def object_hook(obj, valid_dtypes=['f8', 'i8']):
+def object_hook(obj, valid_dtypes=VALID_DTYPES):
     """
     Tries to convert generic lists and as numpy.arrays.
     Only if the dtype of the converted numpy.array is a valid_dtype, the
@@ -77,7 +78,7 @@ def read(path):
     return out_dict
 
 
-def read_tree(path):
+def read_tree(path, valid_dtypes=VALID_DTYPES):
     """
     Walks down a directory path and reads every json-file into an object.
     Returns one combined object with the top-level keys beeing the dirnames
@@ -89,7 +90,15 @@ def read_tree(path):
         file_path, file_extension = os.path.splitext(_path)
         file_basename = os.path.basename(file_path)
         if str.lower(file_extension) == ".json":
-            out[file_basename] = read(_path)
+            obj = read(_path)
+            if isinstance(obj, list):
+                tmp = numpy.array(obj)
+                if tmp.dtype.str[1:] in valid_dtypes:
+                    out[file_basename] = tmp
+                else:
+                    out[file_basename] = obj
+            else:
+                out[file_basename] = obj
         if os.path.isdir(_path):
             out[file_basename] = read_tree(_path)
     return out
