@@ -1,5 +1,4 @@
 import setuptools
-import os
 
 with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
@@ -9,9 +8,9 @@ setuptools.setup(
     version="0.0.2",
     author="Sebastian Achim Mueller",
     author_email="sebastian-achim.mueller@mpi-hd.mpg.de",
-    description="Dump/load numpy arrays into/from json",
+    description="Dumps and loads numpy-arrays into or from json",
     long_description=long_description,
-    long_description_content_type="text/md",
+    long_description_content_type="text/markdown",
     url="https://github.com/cherenkov-plenoscope/json_numpy",
     classifiers=[
         "Programming Language :: Python :: 3",
