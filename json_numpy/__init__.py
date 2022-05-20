@@ -1,3 +1,14 @@
+"""
+JSON-NUMPY
+----------
+Load and dump numpy-arrays from and to JSON when possible.
+
+If a JSON-object can initialize a numpy-array with VALID_DTYPES,
+then we return this numpy-array.
+
+When a numpy-array can be dumped into a generic list, float, or int,
+then we dump this generic representation into JSON.
+"""
 import numpy
 import json
 import os
