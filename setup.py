@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setuptools.setup(
     name="json_numpy_sebastian-achim-mueller",
-    version="0.1.0",
+    version="0.1.1",
     author="Sebastian Achim Mueller",
     author_email="sebastian-achim.mueller@mpi-hd.mpg.de",
     description="Dumps and loads numpy-arrays into or from json",
