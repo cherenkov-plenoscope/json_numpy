@@ -1,7 +1,7 @@
 JSON-NUMPY
 ==========
 
-Transparent dumps and loads of numpy-arrays.
+Transparent ```dumps``` and ```loads``` of ```numpy-arrays```.
 
 ```Encoder``` 
 -------------
