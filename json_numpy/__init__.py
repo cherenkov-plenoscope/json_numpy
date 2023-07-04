@@ -14,7 +14,8 @@ import json
 import os
 import glob
 
-VALID_DTYPES = ['f8', 'i8']
+VALID_DTYPES = ["f8", "i8"]
+
 
 class Encoder(json.JSONEncoder):
     """
@@ -27,6 +28,7 @@ class Encoder(json.JSONEncoder):
         github-user: schouldsee, 'Bridging Bio and informatics'
         stackoverflow-user: tsveti_iko
     """
+
     def default(self, obj):
         if isinstance(obj, numpy.integer):
             return int(obj)
@@ -76,40 +78,3 @@ def dumps(obj, cls=Encoder, **kwargs):
 
 def loads(s, object_hook=object_hook, **kwargs):
     return json.loads(s, object_hook=object_hook, **kwargs)
-
-
-def write(path, out_dict, indent=4):
-    with open(path, "wt") as f:
-        f.write(json.dumps(out_dict, indent=indent, cls=Encoder))
-
-
-def read(path):
-    with open(path, "rt") as f:
-        out_dict = loads(f.read())
-    return out_dict
-
-
-def read_tree(path, valid_dtypes=VALID_DTYPES):
-    """
-    Walks down a directory path and reads every json-file into an object.
-    Returns one combined object with the top-level keys beeing the dirnames
-    and basenames of the json-files.
-    """
-    out = {}
-    _paths = glob.glob(os.path.join(path, "*"))
-    for _path in _paths:
-        file_path, file_extension = os.path.splitext(_path)
-        file_basename = os.path.basename(file_path)
-        if str.lower(file_extension) == ".json":
-            obj = read(_path)
-            if isinstance(obj, list):
-                tmp = numpy.array(obj)
-                if tmp.dtype.str[1:] in valid_dtypes:
-                    out[file_basename] = tmp
-                else:
-                    out[file_basename] = obj
-            else:
-                out[file_basename] = obj
-        if os.path.isdir(_path):
-            out[file_basename] = read_tree(_path)
-    return out
