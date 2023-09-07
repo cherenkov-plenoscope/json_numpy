@@ -9,6 +9,7 @@ then we return this numpy-array.
 When a numpy-array can be dumped into a generic list, float, or int,
 then we dump this generic representation into JSON.
 """
+from .version import __version__
 import numpy
 import json
 import os
