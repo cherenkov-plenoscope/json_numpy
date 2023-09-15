@@ -36,7 +36,7 @@ example
     :target: https://github.com/psf/black
 
 .. |TestStatus| image:: https://github.com/cherenkov-plenoscope/json_numpy/actions/workflows/test.yml/badge.svg?branch=main
-   :target: https://github.com/cherenkov-plenoscope/json_numpy/actions/workflows/test.yml
+    :target: https://github.com/cherenkov-plenoscope/json_numpy/actions/workflows/test.yml
 
 .. |PyPiStatus| image:: https://img.shields.io/pypi/v/json_numpy_sebastian-achim-mueller
-   :target: https://pypi.org/project/json_numpy_sebastian-achim-mueller/
+    :target: https://pypi.org/project/json_numpy_sebastian-achim-mueller

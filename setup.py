@@ -22,11 +22,14 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/x-rst",
     url="https://github.com/cherenkov-plenoscope/json_numpy",
-    packages=["json_numpy",],
+    packages=[
+        "json_numpy",
+    ],
     package_data={"json_numpy": []},
     install_requires=[],
     python_requires=">=3.0",
     classifiers=[
+        "Natural Language :: English",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
