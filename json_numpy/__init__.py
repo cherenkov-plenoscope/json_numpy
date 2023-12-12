@@ -57,20 +57,33 @@ def object_hook(obj, valid_dtypes=VALID_DTYPES):
             in an conversion to numpy.array.
             The endianness-markers '<', '>' are stripped.
     """
+    if isinstance(obj, dict):
+        return _hook_dict(dic=obj, valid_dtypes=valid_dtypes)
+    elif isinstance(obj, list):
+        return _hook_list(lis=obj, valid_dtypes=valid_dtypes)
+    else:
+        return obj
+
+
+def _hook_dict(dic, valid_dtypes):
     out = {}
-    for key in obj:
-        item = obj[key]
+    for key in dic:
+        item = dic[key]
         if isinstance(item, dict):
-            out[key] = object_hook(item)
+            out[key] = _hook_dict(dic=item, valid_dtypes=valid_dtypes)
         elif isinstance(item, list):
-            tmp = numpy.array(item)
-            if tmp.dtype.str[1:] in valid_dtypes:
-                out[key] = tmp
-            else:
-                out[key] = item
+            out[key] = _hook_list(lis=item, valid_dtypes=valid_dtypes)
         else:
             out[key] = item
     return out
+
+
+def _hook_list(lis, valid_dtypes):
+    tmp = numpy.array(lis)
+    if tmp.dtype.str[1:] in valid_dtypes:
+        return tmp
+    else:
+        return lis
 
 
 def dumps(obj, cls=Encoder, **kwargs):
@@ -78,4 +91,5 @@ def dumps(obj, cls=Encoder, **kwargs):
 
 
 def loads(s, object_hook=object_hook, **kwargs):
-    return json.loads(s, object_hook=object_hook, **kwargs)
+    obj = json.loads(s, **kwargs)
+    return object_hook(obj=obj)

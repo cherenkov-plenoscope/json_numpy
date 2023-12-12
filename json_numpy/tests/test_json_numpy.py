@@ -16,31 +16,31 @@ def test_encoder_array2d():
 
 
 def test_encoder_integer():
-    obj = {"a": numpy.int(16)}
+    obj = {"a": numpy.int64(16)}
     s = json.dumps(obj=obj, cls=json_numpy.Encoder, indent=None)
     assert s == '{"a": 16}'
 
 
 def test_encoder_float():
-    obj = {"a": numpy.float(16)}
+    obj = {"a": numpy.float64(16)}
     s = json.dumps(obj=obj, cls=json_numpy.Encoder, indent=None)
     assert s == '{"a": 16.0}'
 
 
 def test_encoder_float_nan():
-    obj = {"a": numpy.float(float("nan"))}
+    obj = {"a": numpy.float64(float("nan"))}
     s = json.dumps(obj=obj, cls=json_numpy.Encoder, indent=None)
     assert s == '{"a": NaN}'
 
 
 def test_encoder_float_inf():
-    obj = {"a": numpy.float(float("inf"))}
+    obj = {"a": numpy.float64(float("inf"))}
     s = json.dumps(obj=obj, cls=json_numpy.Encoder, indent=None)
     assert s == '{"a": Infinity}'
 
 
 def test_encoder_float_minus_inf():
-    obj = {"a": numpy.float(-float("inf"))}
+    obj = {"a": numpy.float64(-float("inf"))}
     s = json.dumps(obj=obj, cls=json_numpy.Encoder, indent=None)
     assert s == '{"a": -Infinity}'
 
@@ -130,3 +130,25 @@ def test_decoder_list_partly_invalid_dtype():
     assert obj["a"][0] == 1
     assert obj["a"][1] == "b"
     assert obj["a"][2] == "c"
+
+
+def test_only_array_loads():
+    s = "[1, 2, 3]"
+    obj = json_numpy.loads(s)
+    assert isinstance(obj, numpy.ndarray)
+    assert obj.shape[0] == 3
+
+
+def test_only_list_loads():
+    s = '[1, 2, 3, "a"]'
+    obj = json_numpy.loads(s)
+    assert isinstance(obj, list)
+    obj[0] == 1
+    obj[1] == 2
+    obj[2] == 3
+    obj[3] == "a"
+
+
+def test_only_array_dumps():
+    s = json_numpy.dumps(numpy.array([1, 2, 3]))
+    assert s == "[1, 2, 3]"
