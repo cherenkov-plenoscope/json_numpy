@@ -83,7 +83,15 @@ def _hook_list(lis, valid_dtypes):
     if tmp.dtype.str[1:] in valid_dtypes:
         return tmp
     else:
-        return lis
+        out = []
+        for item in lis:
+            if isinstance(item, dict):
+                out.append(_hook_dict(dic=item, valid_dtypes=valid_dtypes))
+            elif isinstance(item, list):
+                out.append(_hook_list(lis=item, valid_dtypes=valid_dtypes))
+            else:
+                out.append(item)
+        return out
 
 
 def dumps(obj, cls=Encoder, **kwargs):
