@@ -1,20 +1,32 @@
 ##########
-JSON-NUMPY
+json-numpy
 ##########
 |TestStatus| |PyPiStatus| |BlackStyle| |BlackPackStyle| |MITLicenseBadge|
 
-Transparent ```dumps``` and ```loads``` of ```numpy-arrays```.
+Transparent ``dumps`` and ``loads`` of ``numpy-arrays``. If a list is loaded
+from a ``json`` string it is given to ``numpy.array()``. If further, the
+resulting array has a primitive type of either (``int``, ``float``) it is
+returned by ``loads``.
 
-*************
-```Encoder```
-*************
+*******
+install
+*******
 
-to dump with ```json.dumps()```.
+.. code-block::
 
-*****************
-```object_hook```
-*****************
-to load with ```json.loads()```.
+    pip install json-numpy-sebastian-achim-mueller
+
+
+***********
+``Encoder``
+***********
+
+to dump with ``json.dumps()``.
+
+***************
+``object_hook``
+***************
+to load with ``json.loads()``.
 
 *******
 example
