@@ -12,8 +12,7 @@ then we dump this generic representation into JSON.
 from .version import __version__
 import numpy
 import json
-import os
-import glob
+
 
 VALID_DTYPES = ["f8", "i8"]
 
