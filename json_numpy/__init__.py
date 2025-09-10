@@ -79,19 +79,31 @@ def _hook_dict(dic, valid_dtypes):
 
 
 def _hook_list(lis, valid_dtypes):
-    tmp = numpy.array(lis)
-    if tmp.dtype.str[1:] in valid_dtypes:
-        return tmp
-    else:
-        out = []
-        for item in lis:
-            if isinstance(item, dict):
-                out.append(_hook_dict(dic=item, valid_dtypes=valid_dtypes))
-            elif isinstance(item, list):
-                out.append(_hook_list(lis=item, valid_dtypes=valid_dtypes))
-            else:
-                out.append(item)
-        return out
+    try:
+        tmp = numpy.array(lis)
+        if tmp.dtype.str[1:] in valid_dtypes:
+            return tmp
+        else:
+            return _hook_list_inhomogeneous_or_no_valid_dtype(
+                lis=lis, valid_dtypes=valid_dtypes
+            )
+
+    except ValueError as verr:
+        return _hook_list_inhomogeneous_or_no_valid_dtype(
+            lis=lis, valid_dtypes=valid_dtypes
+        )
+
+
+def _hook_list_inhomogeneous_or_no_valid_dtype(lis, valid_dtypes):
+    out = []
+    for item in lis:
+        if isinstance(item, dict):
+            out.append(_hook_dict(dic=item, valid_dtypes=valid_dtypes))
+        elif isinstance(item, list):
+            out.append(_hook_list(lis=item, valid_dtypes=valid_dtypes))
+        else:
+            out.append(item)
+    return out
 
 
 def dumps(obj, cls=Encoder, **kwargs):

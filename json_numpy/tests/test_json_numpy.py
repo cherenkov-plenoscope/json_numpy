@@ -152,3 +152,19 @@ def test_only_list_loads():
 def test_only_array_dumps():
     s = json_numpy.dumps(numpy.array([1, 2, 3]))
     assert s == "[1, 2, 3]"
+
+
+def test_inhomogeneous_list():
+    s = "[[1, 2], [3]]"
+    obj = json_numpy.loads(s)
+    assert isinstance(obj, list)
+    assert len(obj) == 2
+
+    assert isinstance(obj[0], numpy.ndarray)
+    assert obj[0].shape[0] == 2
+    assert obj[0][0] == 1
+    assert obj[0][1] == 2
+
+    assert isinstance(obj[1], numpy.ndarray)
+    assert obj[1].shape[0] == 1
+    assert obj[1][0] == 3
